@@ -8,7 +8,7 @@ function App() {
 
   return (
     <>
-       <div className="h-screen w-screen overflow-hidden bg-slate-50 flex flex-col items-center justify-center p-4">
+       <div className="h-screen w-screen overflow-hidden bg-[#f2f2f2] flex flex-col items-center justify-center p-4">
       <div className="w-full max-w-5xl relative">
         
         <div className="absolute top-0 -left-4 w-72 h-72 bg-blue-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>

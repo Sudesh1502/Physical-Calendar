@@ -125,7 +125,7 @@ export default function Calendar() {
 
   return (
     <div
-      className="w-full max-w-3xl mx-auto md:my-4 shadow-premium bg-white rounded-3xl flex flex-col relative hello no-scrollbar max-h-200 "
+      className="w-full max-w-3xl mx-auto md:my-4 shadow-premium bg-[#f2f2f2] rounded-3xl flex flex-col relative hello no-scrollbar max-h-200 "
       style={{ perspective: "1200px" }}
     >
      
