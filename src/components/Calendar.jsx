@@ -188,12 +188,12 @@ export default function Calendar() {
               
               <div className="order-2 md:order-1 col-span-1 border-t md:border-t-0 md:border-r border-gray-100 flex flex-col p-4 md:p-6 gap-3 md:-mt-8 z-20 bg-[#fbfbfb] md:bg-transparent">
                
-                <div className="w-full h-24 md:h-36 shadow-sm rounded-xl overflow-hidden bg-white">
+                <div className="w-full h-24 md:h-36 shadow-sm rounded-xl overflow-hidden bg-white border border-gray-300">
                   <NotesArea currentMonth={currentMonth} />
                 </div>
                
-                <div className="flex-grow w-full bg-white md:bg-gray-200/30 rounded-xl border border-gray-100 md:border-blue-50/50 shadow-inner overflow-hidden min-h-[150px]">
-                  <div className="p-3 overflow-y-auto max-h-50">
+                <div className="flex-grow w-full bg-white md:bg-gray-200/30 rounded-xl border border-gray-500 md:border-blue-50/50 shadow-inner overflow-hidden min-h-[150px]">
+                  <div className="p-3 overflow-y-auto max-h-50 ">
                     <TaskList
                       tasks={tasks}
                       setTasks={setTasks}
@@ -204,16 +204,16 @@ export default function Calendar() {
                   </div>
                 </div>
                 
-                <div className="flex justify-between items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100 mb-4 md:mb-0">
+                <div className="flex justify-between items-center bg-white p-2 rounded-xl shadow-sm border border-gray-400 mb-4 md:mb-0">
                   <button
                     onClick={handlePrevMonth}
-                    className="flex text-xs items-center gap-1 font-bold tracking-widest px-4 py-2 hover:bg-gray-50 text-gray-700 rounded-lg uppercase"
+                    className="flex text-xs items-center gap-1 font-bold tracking-widest px-4 py-2 hover:text-black hover:bg-gray-50 text-gray-700 rounded-lg uppercase"
                   >
                     <ChevronLeft className="w-3 h-3" /> Prev
                   </button>
                   <button
                     onClick={handleNextMonth}
-                    className="flex text-xs items-center gap-1 font-bold tracking-widest px-4 py-2 hover:bg-gray-50 text-gray-700 rounded-lg uppercase"
+                    className="flex text-xs items-center gap-1 font-bold tracking-widest px-4 py-2 hover:text-black hover:bg-gray-50 text-gray-700 rounded-lg uppercase"
                   >
                     Next <ChevronRight className="w-3 h-3" />
                   </button>

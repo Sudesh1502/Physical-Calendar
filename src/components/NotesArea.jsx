@@ -22,7 +22,7 @@ export default function NotesArea({ currentMonth }) {
   };
 
   return (
-    <div className="flex flex-col h-full p-6 md:border-r border-gray-100 bg-white/60">
+    <div className="flex flex-col h-full p-6 border-2 border-black-500 bg-white/60">
       <h3 className="text-xs font-bold text-gray-800 uppercase tracking-widest mb-4 mt-2">Notes</h3>
       
       <div className="relative flex-grow">
