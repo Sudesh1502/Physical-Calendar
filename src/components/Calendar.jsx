@@ -7,9 +7,15 @@ import DateGrid from "./DateGrid";
 import NotesArea from "./NotesArea";
 import NoteDialog from "./NoteDialog";
 import TagDialog from "./TagDialog";
-import { getTasks, saveTasks, getTags, saveTags } from "../utils/calendar";
+import {
+  getTasks,
+  saveTasks,
+  getTags,
+  saveTags,
+  monthData,
+} from "../utils/calendar";
 import TaskList from "./TasksList";
-import { MorphingText } from "@/components/ui/morphing-text"
+import { MorphingText } from "./ui/morphing-text";
 
 export default function Calendar() {
   const [currentMonth, setCurrentMonth] = useState(new Date());
@@ -17,22 +23,49 @@ export default function Calendar() {
   const [selectionEnd, setSelectionEnd] = useState(null);
   const [selectedTask, setSelectedTask] = useState(null);
   const [activeDate, setActiveDate] = useState(startOfDay(new Date()));
+  const [showTaskInfo, setShowTaskInfo] = useState(true);
 
-  // Data States
+
   const [tasks, setTasks] = useState([]);
   const [tags, setTags] = useState({});
 
-  // Modal States
+  
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
+  const [curMonthInfo, setCurMonthInfo] = useState(null);
 
   useEffect(() => {
     setTasks(getTasks());
     setTags(getTags());
-  }, []);
+  }, [selectedTask]);
 
-  const handlePrevMonth = () => setCurrentMonth((prev) => subMonths(prev, 1));
-  const handleNextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1));
+  useEffect(() => {},[selectedTask])
+
+  const handlePrevMonth = () => {
+    setCurrentMonth((prev) => {
+      const newDate = subMonths(prev, 1);
+
+      const monthName = newDate.toLocaleString("default", { month: "long" });
+      const d = monthData[monthName.toLowerCase()];
+
+      setCurMonthInfo(d);
+
+      return newDate;
+    });
+  };
+  const handleNextMonth = () => {
+    setCurrentMonth((prev) => {
+      const newDate = addMonths(prev, 1);
+
+      const monthName = newDate.toLocaleString("default", { month: "long" });
+      const d = monthData[monthName.toLowerCase()];
+
+      setCurMonthInfo(d);
+
+      return newDate;
+    });
+  };
+
 
   //handles the date selected
   const handleDateSelect = (date) => {
@@ -64,7 +97,6 @@ export default function Calendar() {
     setTasks(newTasks);
     saveTasks(newTasks);
     setIsTaskModalOpen(false);
-    // Reset selection after saving
     setSelectionStart(null);
     setSelectionEnd(null);
   };
@@ -86,13 +118,17 @@ export default function Calendar() {
     setTags(newTags);
     saveTags(newTags);
     setIsTagModalOpen(false);
+
+    setSelectionStart(null);
+  setSelectionEnd(null);
   };
 
   return (
     <div
-      className="w-full max-w-3xl mx-auto md:my-4 shadow-premium bg-white rounded-3xl flex flex-col relative"
+      className="w-full max-w-3xl mx-auto md:my-4 shadow-premium bg-white rounded-3xl flex flex-col relative hello no-scrollbar max-h-200 "
       style={{ perspective: "1200px" }}
     >
+     
       <div className="absolute -top-3 md:-top-4 left-0 w-full z-40 pointer-events-none flex justify-center">
         <img
           src="/spiral-binding.svg"
@@ -100,7 +136,6 @@ export default function Calendar() {
           className="w-[95%] max-w-3xl drop-shadow-md"
         />
       </div>
-
       <div className="relative">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
@@ -111,61 +146,27 @@ export default function Calendar() {
             transition={{ duration: 0.6, type: "spring", bounce: 0.2 }}
             className="w-full flex flex-col bg-[#fbfbfb] rounded-3xl overflow-hidden shadow-inner"
           >
-            <HeroSection currentMonth={currentMonth} activeDate={activeDate} />
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-0 h-auto min-h-[20rem]">
-              <div className="col-span-1 border-r border-gray-100/50 flex flex-col p-4 md:p-6 gap-2 md:-mt-8 z-20">
-                <div className="w-full h-28 md:h-36 shadow-sm rounded-xl overflow-hidden bg-white mt-4 md:mt-0">
-                  <NotesArea currentMonth={currentMonth} />
-                </div>
-
-                {/* Expanded Month Notes or Filler */}
-                <div className="flex-grow w-full bg-gray-200 rounded-xl border border-blue-50/50 shadow-inner overflow-hidden">
-                  <div className="p-4 overflow-y-auto max-h-30">
-                    <TaskList
-                      tasks={tasks}
-                      setTasks={setTasks}
-                      setSelectedTask={setSelectedTask}
-                    />
-                  </div>
-                </div>
-
-                <div className="flex justify-between items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100 mt-2">
-                  <button
-                    onClick={handlePrevMonth}
-                    className="flex text-sm items-center gap-1 font-bold tracking-widest px-4 py-2 hover:bg-gray-50 text-gray-700 rounded-lg transition-colors uppercase"
-                  >
-                    <ChevronLeft className="w-4 h-4" /> Prev
-                  </button>
-                  <button
-                    onClick={handleNextMonth}
-                    className="flex text-sm items-center gap-1 font-bold tracking-widest px-4 py-2 hover:bg-gray-50 text-gray-700 rounded-lg transition-colors uppercase"
-                  >
-                    Next <ChevronRight className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-
-              <div className="col-span-1 md:col-span-2 flex flex-col p-2 md:p-6 bg-white z-20">
+            <HeroSection
+              currentMonth={currentMonth}
+              activeDate={activeDate}
+              curMonthInfo={curMonthInfo}
+            />
+            
+            <div className="flex flex-col md:grid md:grid-cols-3 gap-0 h-auto min-h-[20rem]">
+            
+              <div className="order-1 md:order-2 col-span-1 md:col-span-2 flex flex-col p-2 md:p-6 bg-white z-20">
                 <div className="flex items-center justify-end gap-4 w-full">
-                  {/* Task Title */}
-                  <h2 className="text-md md:text-xl font-bold text-slate-800 tracking-tighter truncate">
-                    <MorphingText
-                      texts={[
-                        selectedTask ? selectedTask.text : "Upcoming Schedule",
-                      ]}
-                    />
+                 
+                  <h2 className="text-lg md:text-xl font-extrabold text-slate-800 tracking-tighter truncate">
+                    {selectedTask ? selectedTask.text : "Upcoming Schedule"}
                   </h2>
 
-                  {/* Date Range */}
+                 
                   {selectedTask && (
-                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 border border-gray-100 rounded-lg shrink-0">
-                      <span className="text-[10px] md:text-xs font-black text-blue-600 uppercase tracking-tight whitespace-nowrap text-lg md:text-xl font-extrabold text-slate-800 tracking-tighter truncate">
-                        <MorphingText
-                          texts={[
-                            `${format(selectedTask.start, "MMM d")} — ${format(selectedTask.end, "MMM d")}`,
-                          ]}
-                        />
+                    <div className="flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 border border-blue-100/30 rounded-lg shrink-0">
+                      <span className="text-[10px] md:text-xs font-black text-blue-600 uppercase tracking-tight whitespace-nowrap">
+                        {format(selectedTask.start, "MMM d")} —{" "}
+                        {format(selectedTask.end, "MMM d")}
                       </span>
                     </div>
                   )}
@@ -184,12 +185,46 @@ export default function Calendar() {
                   />
                 </div>
               </div>
+              
+              <div className="order-2 md:order-1 col-span-1 border-t md:border-t-0 md:border-r border-gray-100 flex flex-col p-4 md:p-6 gap-3 md:-mt-8 z-20 bg-[#fbfbfb] md:bg-transparent">
+               
+                <div className="w-full h-24 md:h-36 shadow-sm rounded-xl overflow-hidden bg-white">
+                  <NotesArea currentMonth={currentMonth} />
+                </div>
+               
+                <div className="flex-grow w-full bg-white md:bg-gray-200/30 rounded-xl border border-gray-100 md:border-blue-50/50 shadow-inner overflow-hidden min-h-[150px]">
+                  <div className="p-3 overflow-y-auto max-h-50">
+                    <TaskList
+                      tasks={tasks}
+                      setTasks={setTasks}
+                      setSelectedTask={setSelectedTask}
+                      selectedTask={selectedTask}
+                      setShowTaskInfo={setShowTaskInfo}
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex justify-between items-center bg-white p-2 rounded-xl shadow-sm border border-gray-100 mb-4 md:mb-0">
+                  <button
+                    onClick={handlePrevMonth}
+                    className="flex text-xs items-center gap-1 font-bold tracking-widest px-4 py-2 hover:bg-gray-50 text-gray-700 rounded-lg uppercase"
+                  >
+                    <ChevronLeft className="w-3 h-3" /> Prev
+                  </button>
+                  <button
+                    onClick={handleNextMonth}
+                    className="flex text-xs items-center gap-1 font-bold tracking-widest px-4 py-2 hover:bg-gray-50 text-gray-700 rounded-lg uppercase"
+                  >
+                    Next <ChevronRight className="w-3 h-3" />
+                  </button>
+                </div>
+              </div>
             </div>
           </motion.div>
         </AnimatePresence>
       </div>
 
-      {/* Task Dialog */}
+      {/* ==================================================Task Dialog ==================================================*/}
       <NoteDialog
         isOpen={isTaskModalOpen}
         onClose={() => setIsTaskModalOpen(false)}
@@ -199,7 +234,7 @@ export default function Calendar() {
         onReset={handleResetRange}
       />
 
-      {/* Tag Dialog */}
+      {/* ====================================================Tag Dialog==================================================== */}
       <TagDialog
         isOpen={isTagModalOpen}
         onClose={() => setIsTagModalOpen(false)}

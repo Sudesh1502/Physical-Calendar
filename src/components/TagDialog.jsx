@@ -13,7 +13,7 @@ export default function TagDialog({ isOpen, onClose, date, currentTag, onSaveTag
   return (
     <AnimatePresence>
       <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-        {/* Backdrop */}
+       
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -22,7 +22,7 @@ export default function TagDialog({ isOpen, onClose, date, currentTag, onSaveTag
           className="absolute inset-0 bg-black/40 backdrop-blur-sm"
         />
 
-        {/* Dialog */}
+        
         <motion.div
           initial={{ opacity: 0, scale: 0.95, y: 20 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}

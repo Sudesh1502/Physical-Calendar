@@ -2,13 +2,13 @@ import React from "react";
 import { format } from "date-fns";
 import heroImage from "../assets/hero_mountains.png";
 
-export default function HeroSection({ currentMonth, activeDate }) {
+export default function HeroSection({ currentMonth, activeDate, curMonthInfo }) {
   const displayDate = new Date();
 
   return (
-    <div className="relative h-64 md:h-72 w-full bg-white z-10 rounded-t-3xl overflow-hidden">
+    <div className="relative h-64 md:h-62 w-full bg-white z-10 rounded-t-3xl overflow-hidden">
       <img
-        src={heroImage}
+        src={curMonthInfo?.image || heroImage}
         alt="Calendar Hero Theme"
         className="absolute inset-0 w-full h-full object-cover"
       />

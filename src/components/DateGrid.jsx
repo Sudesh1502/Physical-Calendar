@@ -59,7 +59,7 @@ export default function DateGrid({
       <div className="flex justify-center items-center mb-4">
         
       </div>
-      {/* Weekday headers */}
+      {/* ================================Weekday headers ===========================================*/}
       <div className="grid grid-cols-7 gap-1 mb-4 border-b border-slate-100/50 pb-2">
         {weekDays.map((w, i) => (
           <div
@@ -74,7 +74,7 @@ export default function DateGrid({
         ))}
       </div>
 
-      {/* Date grid */}
+      {/*============================================= Date grid =================================================*/}
       <div className="grid grid-cols-7 gap-y-1 md:gap-y-2 gap-x-1 flex-grow items-start">
         {days.map((day, idx) => {
           const isSelected = isDateSelected(day, selectionStart, selectionEnd);
@@ -125,7 +125,7 @@ export default function DateGrid({
               onClick={() => handleDayClick(day)}
               onDoubleClick={() => onDateDoubleSelect(day)}
             >
-              {/* Range background */}
+              
               {inRange && (
                 <div
                   className={twMerge(
@@ -135,7 +135,7 @@ export default function DateGrid({
                 />
               )}
 
-              {/* Active selection focus */}
+              
               {isActive && !isSelected && (
                 <div className="absolute inset-0.5 rounded-full bg-slate-100 animate-pulse" />
               )}

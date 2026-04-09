@@ -51,3 +51,70 @@ export function getTags() {
 export function saveTags(tags) {
   localStorage.setItem(TAGS_KEY, JSON.stringify(tags));
 }
+
+
+// utils.js or a new file like monthData.js
+
+import jan from "../assets/jan.webp";
+import feb from "../assets/feb.jpg";
+import mar from "../assets/march.jpg";
+import apr from "../assets/april.jpg";
+import may from "../assets/may.jpg";
+import june from "../assets/june.jpg";
+import july from "../assets/july.jpg";
+import aug from "../assets/aug.jpg";
+import sep from "../assets/sep.jpg";
+import oct from "../assets/oct.avif";
+import nov from "../assets/nov.jpg";
+import dec from "../assets/dec.webp";
+
+export const monthData = {
+  january: {
+    image: jan,
+    text: "New year, new systems — focus on consistency, not hype.",
+  },
+  february: {
+    image: feb,
+    text: "Stay disciplined — progress compounds quietly.",
+  },
+  march: {
+    image: mar,
+    text: "Execution beats planning — ship something this month.",
+  },
+  april: {
+    image: apr,
+    text: "Refine your skills — mastery is built in iterations.",
+  },
+  may: {
+    image: may,
+    text: "Push your limits — growth starts where comfort ends.",
+  },
+  june: {
+    image: june,
+    text: "Halfway there — audit your goals and realign.",
+  },
+  july: {
+    image: july,
+    text: "Stay resilient — small steps still move you forward.",
+  },
+  august: {
+    image: aug,
+    text: "Own your time — what you do daily defines you.",
+  },
+  september: {
+    image: sep,
+    text: "Level up — upgrade your habits and standards.",
+  },
+  october: {
+    image: oct,
+    text: "Stay focused — eliminate distractions aggressively.",
+  },
+  november: {
+    image: nov,
+    text: "Finish strong — consistency now beats past effort.",
+  },
+  december: {
+    image: dec,
+    text: "Reflect, reset, and prepare for a stronger comeback.",
+  },
+};
