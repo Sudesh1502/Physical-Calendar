@@ -25,11 +25,9 @@ export default function Calendar() {
   const [activeDate, setActiveDate] = useState(startOfDay(new Date()));
   const [showTaskInfo, setShowTaskInfo] = useState(true);
 
-
   const [tasks, setTasks] = useState([]);
   const [tags, setTags] = useState({});
 
-  
   const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
   const [isTagModalOpen, setIsTagModalOpen] = useState(false);
   const [curMonthInfo, setCurMonthInfo] = useState(null);
@@ -39,7 +37,7 @@ export default function Calendar() {
     setTags(getTags());
   }, [selectedTask]);
 
-  useEffect(() => {},[selectedTask])
+  useEffect(() => {}, [selectedTask]);
 
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => {
@@ -65,7 +63,6 @@ export default function Calendar() {
       return newDate;
     });
   };
-
 
   //handles the date selected
   const handleDateSelect = (date) => {
@@ -120,7 +117,7 @@ export default function Calendar() {
     setIsTagModalOpen(false);
 
     setSelectionStart(null);
-  setSelectionEnd(null);
+    setSelectionEnd(null);
   };
 
   return (
@@ -128,7 +125,6 @@ export default function Calendar() {
       className="w-full max-w-3xl mx-auto md:my-4 shadow-premium bg-[#f2f2f2] rounded-3xl flex flex-col relative hello no-scrollbar max-h-200 "
       style={{ perspective: "1200px" }}
     >
-     
       <div className="absolute -top-3 md:-top-4 left-0 w-full z-40 pointer-events-none flex justify-center">
         <img
           src="/spiral-binding.svg"
@@ -151,17 +147,17 @@ export default function Calendar() {
               activeDate={activeDate}
               curMonthInfo={curMonthInfo}
             />
-            
+
             <div className="flex flex-col md:grid md:grid-cols-3 gap-0 h-auto min-h-[20rem]">
-            
               <div className="order-1 md:order-2 col-span-1 md:col-span-2 flex flex-col p-2 md:p-6 bg-white z-20">
                 <div className="flex items-center justify-end gap-4 w-full">
-                 
                   <h2 className="text-lg md:text-xl font-extrabold text-slate-800 tracking-tighter truncate">
-                    {selectedTask ? selectedTask.text : curMonthInfo?.text || "Refine your skills — mastery is built in iterations."}
+                    {selectedTask
+                      ? selectedTask.text
+                      : curMonthInfo?.text ||
+                        "Refine your skills — mastery is built in iterations."}
                   </h2>
 
-                 
                   {selectedTask && (
                     <div className="flex items-center gap-1.5 px-2.5 py-1 bg-blue-50 border border-blue-100/30 rounded-lg shrink-0">
                       <span className="text-[10px] md:text-xs font-black text-blue-600 uppercase tracking-tight whitespace-nowrap">
@@ -185,13 +181,12 @@ export default function Calendar() {
                   />
                 </div>
               </div>
-              
+
               <div className="order-2 md:order-1 col-span-1 border-t md:border-t-0 md:border-r border-gray-100 flex flex-col p-4 md:p-6 gap-3 md:-mt-8 z-20 bg-[#fbfbfb] md:bg-transparent">
-               
                 <div className="w-full h-24 md:h-36 shadow-sm rounded-xl overflow-hidden bg-white border border-gray-300">
                   <NotesArea currentMonth={currentMonth} />
                 </div>
-               
+
                 <div className="flex-grow w-full bg-white md:bg-gray-200/30 rounded-xl border border-gray-500 md:border-blue-50/50 shadow-inner overflow-hidden min-h-[150px]">
                   <div className="p-3 overflow-y-auto max-h-50 ">
                     <TaskList
@@ -203,7 +198,7 @@ export default function Calendar() {
                     />
                   </div>
                 </div>
-                
+
                 <div className="flex justify-between items-center bg-white p-2 rounded-xl shadow-sm border border-gray-400 mb-4 md:mb-0">
                   <button
                     onClick={handlePrevMonth}
@@ -227,7 +222,11 @@ export default function Calendar() {
       {/* ==================================================Task Dialog ==================================================*/}
       <NoteDialog
         isOpen={isTaskModalOpen}
-        onClose={() => setIsTaskModalOpen(false)}
+        onClose={() => {
+          setSelectionStart(null);
+          setSelectionEnd(null);
+          setIsTaskModalOpen(false);
+        }}
         startDate={selectionStart}
         endDate={selectionEnd}
         onSave={handleSaveTask}
@@ -237,7 +236,11 @@ export default function Calendar() {
       {/* ====================================================Tag Dialog==================================================== */}
       <TagDialog
         isOpen={isTagModalOpen}
-        onClose={() => setIsTagModalOpen(false)}
+        onClose={() => {
+          setSelectionStart(null);
+          setSelectionEnd(null);
+          setIsTagModalOpen(false);
+        }}
         date={activeDate}
         currentTag={tags[format(activeDate, "yyyy-MM-dd")]}
         onSaveTag={handleSaveTag}
