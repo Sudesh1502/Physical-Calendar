@@ -9,8 +9,7 @@ export function getCalendarDays(month) {
 
 export function isDateInRange(date, start, end) {
   if (!start || !end) return false;
-  // If end is before start (user clicked inverted), swap logic internally or handle in component
-  // Better to handle swapping in component and ensure start <= end here
+
   const actualStart = start > end ? end : start;
   const actualEnd = start > end ? start : end;
   

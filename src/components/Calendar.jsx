@@ -158,7 +158,7 @@ export default function Calendar() {
                 <div className="flex items-center justify-end gap-4 w-full">
                  
                   <h2 className="text-lg md:text-xl font-extrabold text-slate-800 tracking-tighter truncate">
-                    {selectedTask ? selectedTask.text : "Upcoming Schedule"}
+                    {selectedTask ? selectedTask.text : curMonthInfo?.text || "Refine your skills — mastery is built in iterations."}
                   </h2>
 
                  

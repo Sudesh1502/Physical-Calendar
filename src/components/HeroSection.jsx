@@ -1,6 +1,6 @@
 import React from "react";
 import { format } from "date-fns";
-import heroImage from "../assets/hero_mountains.png";
+import heroImage from "../assets/april.jpg";
 
 export default function HeroSection({ currentMonth, activeDate, curMonthInfo }) {
   const displayDate = new Date();
